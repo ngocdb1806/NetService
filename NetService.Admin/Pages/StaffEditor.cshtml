@@ -1,0 +1,25 @@
+﻿@page "/staff/create"
+@model NetService.Admin.Pages.Staff.EditorModel
+@{
+    var orderIdStr = RouteData.Values["orderId"].ToString();
+    var orderId = 0;
+    int.TryParse(orderIdStr, out orderId);
+    ViewData["Title"] = "Editor";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewData["Title"]</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index-2.html">Home</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>@ViewData["Title"]</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<h2>@(orderId <= 0 ? "Create" : "Update")</h2>
