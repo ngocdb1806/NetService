@@ -1,14 +1,14 @@
 ﻿@page "/inventory"
 @{
-    ViewData["Title"] = "Inventory Management";
-    ViewData["RouteName"] = "Inventory Management";
+    ViewData["Title"] = "Phân tích kho";
+    ViewData["Home"] = "Quản lý kho";
 }
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>@ViewData["Title"]</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index-2.html">Home</a>
+                <a href="#">@ViewData["Home"]</a>
             </li>
             <li class="breadcrumb-item active">
                 <strong>@ViewData["Title"]</strong>
@@ -42,15 +42,6 @@
                                 </tr>
                             </thead>
                             <tbody></tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Giá nhập</th>
-                                    <th>Số lượng tồn</th>
-                                    <th>Số lượng sử dụng một lần</th>
-                                    <th>Đơn vị dùng</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -59,21 +50,52 @@
     </div>
 </div>
 @section Scripts {
-    <script type="text/javascript">
-        // Module load all goods
-        (async function () {
-            var response = await fetch(`${BASE_API_URL}/${INVENTORY_URL}/findAllGoods`);
-            var data = (await response.json());
-            $("#tbl_inventory_goods").dataTable({
-                data: data,
-                columns: [
-                    { data: 'goodName' },
-                    { data: 'costPrice' },
-                    { data: 'quantityInStock' },
-                    { data: 'exchangeValue' },
-                    { data: 'nameUnit' }
-                ]
-            });
-        })();
-    </script>
+<script type="text/javascript">
+// Module load all goods
+    (async function () {
+        @*var response = await fetch(`${BASE_API_URL}/${INVENTORY_URL}/findAllGoods`);
+        var data = (await response.json());*@
+
+        var data = getTempDatas.GetAllGoods;
+        $("#tbl_inventory_goods").dataTable({
+            data: data,
+            columns: [
+                { data: 'goodName' },
+                { data: 'costPrice' },
+                { data: 'quantityInStock' },
+                { data: 'exchangeValue' },
+                { data: 'nameUnit' }
+            ],
+
+            "language": {
+                "decimal":        "",
+                "emptyTable":     "Khong co du lieu",
+                "info":           "Xuat hien tu _START_ den _END_ trong _TOTAL_ du lieu",
+                "infoEmpty":      "Xuat hien tu 0 den 0 trong 0 du lieu",
+                "infoFiltered":   "(Loc tu _MAX_ du lieu)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Xuat hien _MENU_ du lieu",
+                "loadingRecords": "Dang cho...",
+                "processing":     "Dang xu ly...",
+                "search":         "Tim kiem:",
+                "zeroRecords":    "Khong tim thay tap du lieu mong muon",
+                  "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tới",
+                    "previous": "Lui"
+                },
+                "aria": {
+                    "sortAscending":  ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                }
+            }
+        });
+    })();
+
+
+
+
+</script>
 }

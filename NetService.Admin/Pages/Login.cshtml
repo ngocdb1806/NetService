@@ -48,15 +48,18 @@
             e.preventDefault();
             var username = $('#usernameVM').val();
             var password = $('#password').val();
+            try {
+                fetch(`${BASE_API_URL}/${LOGIN_URL}?username=${username}&password=${password}`).then(res => res.json()).then(response => {
+                    if (response.status != 500) {
+                        srsn.Utils.SetCurrentLogin(response, response.email);
+                        window.location.href = "/";
+                    }
+                })
 
-            fetch(`${BASE_API_URL}/${LOGIN_URL}?username=${username}&password=${password}`).then(res => res.json()).then(response => {
-                if (response.status != 500) {
-                    srsn.Utils.SetCurrentLogin(response, response.email);
-                    window.location.href = "/";
-                }
-            }).catch(function(error) {
-                console.error('Error:', error)
-            });
+            } catch (e) {
+                alert("Login Exception");
+                console.log(e);
+            }
         });
     </script>
 </body>

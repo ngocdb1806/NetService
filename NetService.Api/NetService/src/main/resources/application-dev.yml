@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: Kaitori Backend Dev
+  jackson:
+      serialization:
+        indent_output: true
+        write_dates_as_timestamps: false
+  messages:
+      basename: messages-error
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://35.185.187.45:3306/net_service?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: oem1qazxsw2
+
+  session:

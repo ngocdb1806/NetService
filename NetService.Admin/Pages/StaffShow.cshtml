@@ -1,15 +1,14 @@
 ﻿@page "/staff"
-@model NetService.Admin.Pages.Staff.ShowStaffModel
 @{
-    ViewData["Title"] = "Staff Management";
-    ViewData["RouteName"] = "StaffManagement";
+    ViewData["Title"] = "Danh sách nhân viên";
+    ViewData["Home"] = "Quản lý nhân viên";
 }
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>@ViewData["Title"]</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index-2.html">Home</a>
+                <a href="#">@ViewData["Home"]</a>
             </li>
             <li class="breadcrumb-item active">
                 <strong>@ViewData["Title"]</strong>
@@ -20,6 +19,7 @@
 
     </div>
 </div>
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -27,94 +27,23 @@
                 <div class="ibox-title">
                     <h5>List Order</h5>
                     <div class="ibox-tools">
-                       
+
                     </div>
                 </div>
                 <div class="ibox-content">
 
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" id="tbl_staffs">
                             <thead>
                                 <tr>
-                                    <th>Rendering engine</th>
-                                    <th>Browser</th>
-                                    <th>Platform(s)</th>
-                                    <th>Engine version</th>
-                                    <th>CSS grade</th>
+                                    <th>Tên nhân viên</th>
+                                    <th>Mail</th>
+                                    <th>Tên đầy đủ</th>
+                                    <th>Giờ làm việc</th>
+                                    <th>Nơi làm việc</th>
+                                    <th>Tình trạng</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="gradeX">
-                                    <td>Trident</td>
-                                    <td>
-                                        Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">4</td>
-                                    <td class="center">X</td>
-                                </tr>
-                                <tr class="gradeC">
-                                    <td>Trident</td>
-                                    <td>
-                                        Internet
-                                        Explorer 5.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">5</td>
-                                    <td class="center">C</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>Trident</td>
-                                    <td>
-                                        Internet
-                                        Explorer 5.5
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td class="center">5.5</td>
-                                    <td class="center">A</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>Trident</td>
-                                    <td>
-                                        Internet
-                                        Explorer 6
-                                    </td>
-                                    <td>Win 98+</td>
-                                    <td class="center">6</td>
-                                    <td class="center">A</td>
-                                </tr>
-                                <tr class="gradeA">
-                                    <td>Trident</td>
-                                    <td>Internet Explorer 7</td>
-                                    <td>Win XP SP2+</td>
-                                    <td class="center">7</td>
-                                    <td class="center">A</td>
-                                </tr>
-                                <tr class="gradeC">
-                                    <td>Misc</td>
-                                    <td>PSP browser</td>
-                                    <td>PSP</td>
-                                    <td class="center">-</td>
-                                    <td class="center">C</td>
-                                </tr>
-                                <tr class="gradeU">
-                                    <td>Other browsers</td>
-                                    <td>All others</td>
-                                    <td>-</td>
-                                    <td class="center">-</td>
-                                    <td class="center">U</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Rendering engine</th>
-                                    <th>Browser</th>
-                                    <th>Platform(s)</th>
-                                    <th>Engine version</th>
-                                    <th>CSS grade</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -122,3 +51,60 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script type="text/javascript">
+(async function () {
+        //var data = getTempDatas.GetAllStaffs;
+        srsn.Utils.GetAllStaff()
+            .then(function(data) {
+                $("#tbl_staffs").dataTable({
+                    data: data,
+                    columns: [
+                        { data: 'fullName' },
+                        { data: 'email' },
+                        { data: 'fullName' },
+                        { data: 'workingShift' },
+                        { data: 'nameStore' },
+                        {
+                            data: 'status',
+                            render: function (data, type, full, meta) {
+                                if (data) {
+                                    return `<span class="label label-primary">Enable</span>`;
+                                } else {
+                                    return `<span class="label label-danger">Disabled</span>`;
+                                }
+                            }
+                        }
+                    ],
+        
+                    "language": {
+                        "decimal": "",
+                        "emptyTable": "Khong co du lieu",
+                        "info": "Xuat hien tu _START_ den _END_ trong _TOTAL_ du lieu",
+                        "infoEmpty": "Xuat hien tu 0 den 0 trong 0 du lieu",
+                        "infoFiltered": "(Loc tu _MAX_ du lieu)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Xuat hien _MENU_ du lieu",
+                        "loadingRecords": "Dang cho...",
+                        "processing": "Dang xu ly...",
+                        "search": "Tim kiem:",
+                        "zeroRecords": "Khong tim thay tap du lieu mong muon",
+                        "paginate": {
+                            "first": "Đầu",
+                            "last": "Cuối",
+                            "next": "Tới",
+                            "previous": "Lui"
+                        },
+                        "aria": {
+                            "sortAscending": ": activate to sort column ascending",
+                            "sortDescending": ": activate to sort column descending"
+                        }
+                    }
+                });
+            })
+
+
+    })();</script>
+}
